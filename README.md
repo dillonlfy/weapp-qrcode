@@ -41,6 +41,10 @@ Page({
             colorDark: "#1CA4FC",
             colorLight: "white",
             correctLevel: QRCode.CorrectLevel.H,
+            callback: (res) => {
+                // 生成二维码的临时文件
+                console.log(res.path)
+            }
         });
     },
     ...
@@ -66,6 +70,7 @@ Page({
 页面`js`中引入:
 ```
 var QRCode = require('../../utils/weapp-qrcode.js')
+// import QRCode from '../../utils/weapp-qrcode.js'
 ```
 
 页面加载好后:
@@ -80,6 +85,10 @@ var qrcode = new QRCode('canvas', {
     colorDark: "#000000",
     colorLight: "#ffffff",
     correctLevel: QRCode.CorrectLevel.H,
+    callback: (res) => {
+        // 生成二维码的临时文件
+        console.log(res.path)
+    }
 });
 ```
 
@@ -103,4 +112,8 @@ var qrcode = new QRCode('canvas', {
     height: 150px;
 }
 ```
+
+## 参考
+
+https://github.com/tomfriwel/weapp-qrcode
 
