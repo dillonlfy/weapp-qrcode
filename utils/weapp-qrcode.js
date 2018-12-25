@@ -395,12 +395,16 @@ var QRCode;
             }
         }
 
-        _oContext.draw()
+        _oContext.draw(false, () => {
+          setTimeout(() => {
+            this.exportImage()
+          }, 800)
+        })
     };
 
     // 保存为图片，将临时路径传给回调
     QRCode.prototype.exportImage = function (callback) {
-        if (!callback) {
+        if (!callback && typeof this._htOption.callback !== 'function') {
             return
         }
         wx.canvasToTempFilePath({
