@@ -1,5 +1,4 @@
-//Core code comes from https://github.com/davidshimjs/qrcodejs
-
+// Core code comes from https://github.com/davidshimjs/qrcodejs
 var QRCode;
 
 (function () {
@@ -329,22 +328,24 @@ var QRCode;
         var oQRCode = this._oQRCode
 
         var nCount = oQRCode.getModuleCount();
-        var nWidth = _htOption.width / nCount;
-        var nHeight = _htOption.height / nCount;
-        var nRoundedWidth = Math.round(nWidth);
+        var nWidth = _htOption.padding ? (_htOption.width - 2 * _htOption.padding) / nCount : _htOption.width / nCount;
+        var nHeight = _htOption.padding ? (_htOption.height - 2 * _htOption.padding) / nCount : _htOption.height / nCount;
         var nRoundedHeight = Math.round(nHeight);
+        var nRoundedWidth = Math.round(nWidth);
 
         if (_htOption.image && _htOption.image != '') {
             _oContext.drawImage(_htOption.image, 0, 0, _htOption.width, _htOption.height)
         }
-
+        _oContext.setFillStyle('#fff')
+        _oContext.fillRect(0, 0, _htOption.width, _htOption.height)
+        _oContext.save()
         for (var row = 0; row < nCount; row++) {
             for (var col = 0; col < nCount; col++) {
                 var bIsDark = oQRCode.isDark(row, col);
-                var nLeft = col * nWidth;
-                var nTop = row * nHeight;
+                var nLeft = _htOption.padding ? col * nWidth + _htOption.padding : col * nWidth;
+                var nTop = _htOption.padding ? row * nHeight + _htOption.padding : row * nHeight;
                 _oContext.setStrokeStyle(bIsDark ? _htOption.colorDark : _htOption.colorLight)
-                // _oContext.setStrokeStyle('yellow')
+                // _oContext.setStrokeStyle('red')
                 _oContext.setLineWidth(1)
                 _oContext.setFillStyle(bIsDark ? _htOption.colorDark : _htOption.colorLight)
                 // _oContext.setFillStyle('red')
@@ -357,7 +358,6 @@ var QRCode;
                 _oContext.strokeRect(
                     Math.floor(nLeft) + 0.5,
                     Math.floor(nTop) + 0.5,
-                    nRoundedWidth,
                     nRoundedHeight
                 );
 
@@ -404,9 +404,7 @@ var QRCode;
 
     // 保存为图片，将临时路径传给回调
     QRCode.prototype.exportImage = function (callback) {
-        if (!callback && typeof this._htOption.callback !== 'function') {
-            return
-        }
+      if (this._htOption.callback && typeof this._htOption.callback === 'function') {
         wx.canvasToTempFilePath({
             x: 0,
             y: 0,
@@ -415,11 +413,11 @@ var QRCode;
             destWidth: this._htOption.width,
             destHeight: this._htOption.height,
             canvasId: this.canvasId,
-            success: function (res) {
-                console.log(res.tempFilePath)
-                callback(res.tempFilePath)
+            success: (res) => {
+              this._htOption.callback({path: res.tempFilePath})
             }
         })
+      } 
     }
 
     QRCode.CorrectLevel = QRErrorCorrectLevel;
