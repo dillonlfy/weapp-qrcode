@@ -416,7 +416,7 @@ var QRCode;
             success: (res) => {
               this._htOption.callback({path: res.tempFilePath})
             }
-        })
+        }, this._htOption.usingIn)
       } 
     }
 
