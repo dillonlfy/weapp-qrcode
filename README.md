@@ -36,6 +36,8 @@ Page({
             // usingIn: this,
             text: "https://github.com/tomfriwel/weapp-qrcode",
             image: '/images/bg.jpg',
+            imageWidth: 50, // 可选
+            imageHeight: 50, // 可选
             padding: 12,
             width: qrcode_w,
             height: qrcode_w,
