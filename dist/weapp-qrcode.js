@@ -1038,9 +1038,10 @@ var QRCode;
   // QRCode object
   QRCode = function (canvasId, vOption) {
     this._htOption = {
-      width: 256,
-      height: 256,
+      width: 150,
+      height: 150,
       typeNumber: 4,
+      padding: 10,
       colorDark: "#000000",
       colorLight: "#ffffff",
       correctLevel: QRErrorCorrectLevel.H,
