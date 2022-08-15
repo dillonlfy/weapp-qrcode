@@ -1,5 +1,5 @@
 // pages/responsive/responsive.js
-var QRCode = require('../../utils/weapp-qrcode.js')
+var QRCode = require('../../utils/weapp-qrcode.min')
 var qrcode;
 
 const W = wx.getSystemInfoSync().windowWidth;
@@ -19,6 +19,7 @@ Page({
             // usingIn: this,
             text: "https://github.com/tomfriwel/weapp-qrcode",
             image: '/images/bg.jpg',
+            padding: 10,
             width: code_w,
             height: code_w,
             colorDark: "#1CA4FC",
